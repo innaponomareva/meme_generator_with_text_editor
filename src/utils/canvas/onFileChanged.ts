@@ -1,9 +1,9 @@
-import { IImageSize, InputFileEvent } from "../../models/models";
+import { IImage, InputFileEvent } from "../../models/models";
 import { createCanvas } from "./createCanvas";
 
 export const onFileChanged = (
   e: InputFileEvent,
-  imageSize: IImageSize,
+  image: IImage,
   ratio: number
 ) => {
   const input = e.target as HTMLInputElement;
@@ -12,14 +12,18 @@ export const onFileChanged = (
     const target = event.target as FileReader;
     const img = new Image();
     img.onload = function () {
-      const imgCoeff = imageSize.width / img.width;
-      //ratio.value = img.width / 500; // change ratio to preserve the original image size
-      imageSize.width = imageSize.width;
-      imageSize.height = imgCoeff * img.height;
-      const { ctx } = createCanvas(imageSize.width, imageSize.height, ratio);
-      ctx.drawImage(img, 0, 0, imageSize.width, imageSize.height);
+      image.size.coeff = image.size.width / img.width;
+      image.size.width = image.size.width;
+      image.size.height = image.size.coeff * img.height;
+      const { ctx } = createCanvas(
+        image.size.width,
+        image.size.height,
+        ratio * 2
+      );
+      ctx.drawImage(img, 0, 0, image.size.width, image.size.height);
     };
     img.src = target.result as string;
+    image.src = target.result as string;
   };
   reader.readAsDataURL(input.files[0]);
 };

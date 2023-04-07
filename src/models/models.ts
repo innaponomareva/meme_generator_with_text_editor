@@ -7,6 +7,12 @@ export interface InputFileEvent extends Event {
 export interface IImageSize {
   width: number;
   height: number;
+  coeff: number;
+}
+
+export interface IImage {
+  size: IImageSize;
+  src: string;
 }
 
 export interface ITargetRange {

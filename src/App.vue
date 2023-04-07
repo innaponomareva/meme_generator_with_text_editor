@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onUnmounted, watchEffect, watch } from "vue";
 import {
   IOption,
   ISettingMap,
   IIsChanged,
   CategoryType,
   ISettingOptionsMap,
+  IImage,
 } from "./models/models";
 import Button from "./components/Button.vue";
 import ColorPalette from "./components/ColorPalette.vue";
@@ -22,13 +23,43 @@ import { defaultFontDecoration, fontDecorations } from "./lib/fd";
 import { defaultParagraphAlignment, paragraphAlignments } from "./lib/pa";
 import { defaultFontColor, fontColors } from "./lib/fc";
 import { defaultParagraphLineHeight, paragraphLineHeights } from "./lib/plh";
-import { createCanvas, onCanvasDownload } from "./utils/canvas";
+import {
+  createCanvas,
+  onCanvasDownload,
+  drawImageOnCanvas,
+} from "./utils/canvas";
 
 const canvas = ref(null);
 const ratio = ref(2);
 const showTextGrid = ref(true);
-const imageSize = reactive({ width: 500, height: 500 });
+const displaySize = reactive({ width: 0, height: 0 });
+const image = reactive({ size: { width: 0, height: 0, coeff: 1 }, src: "" });
 const activeColor = ref("#000000");
+
+const setDisplaySize = () => {
+  displaySize.width = window.innerWidth;
+  displaySize.height = window.innerHeight;
+};
+
+const setImageSize = () => {
+  image.size.width = displaySize.width > 500 ? 500 : 384;
+  image.size.height =
+    image.src === "" ? image.size.coeff * image.size.width : image.size.height;
+};
+
+const handleResize = () => {
+  setDisplaySize();
+  setImageSize();
+
+  if (canvas.value) {
+    const { ctx } = createCanvas(
+      image.size.width,
+      image.size.height,
+      ratio.value
+    );
+    image.src !== "" && drawImageOnCanvas(ctx, image);
+  }
+};
 
 const settingMap = reactive<ISettingMap>({
   font: {
@@ -100,23 +131,31 @@ const onColorPaletteBtnClick = (option: IOption) => {
 };
 
 onMounted(() => {
-  if (canvas.value) {
-    createCanvas(imageSize.width, imageSize.height, ratio.value);
-  }
+  handleResize();
+  window.addEventListener("resize", handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
 });
 </script>
 
 <template>
   <div class="app-container">
     <TopBarSettings
-      :imageSize="imageSize"
+      :image="image"
       :ratio="ratio"
       :settingMap="settingMap"
       :setIsChanged="setIsChanged"
       :setSettingMap="setSettingMap"
     />
 
-    <div class="color-settings">
+    <div
+      class="color-settings"
+      :style="{
+        width: `${image.size.width}px`,
+      }"
+    >
       <ColorPicker
         id="color-picker"
         :activeColor="activeColor"
@@ -131,8 +170,8 @@ onMounted(() => {
     <div
       class="canvas-container"
       :style="{
-        width: `${imageSize.width}px`,
-        height: `${imageSize.height}px`,
+        width: `${image.size.width}px`,
+        height: `${image.size.height}px`,
       }"
     >
       <canvas ref="canvas" id="canvas"></canvas>

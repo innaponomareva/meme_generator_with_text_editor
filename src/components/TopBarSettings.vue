@@ -10,17 +10,16 @@ import { defaultFontWeight, fontWeights } from "../lib/fw";
 import { defaultParagraphAlignment, paragraphAlignments } from "../lib/pa";
 import {
   CategoryType,
-  IImageSize,
+  IImage,
   InputFileEvent,
   IOption,
   ISettingMap,
 } from "../models/models";
 import { paragraphLineHeights } from "../lib/plh";
 import { onFileChanged } from "../utils/canvas";
-import { Ref } from "vue";
 
 interface TopBarSettingsProps {
-  imageSize: IImageSize;
+  image: IImage;
   ratio: number;
   settingMap: ISettingMap;
   setIsChanged: (
@@ -98,12 +97,17 @@ const onParagraphLineHeightChange = (option: IOption) => {
 </script>
 
 <template>
-  <div class="settings">
+  <div
+    class="settings"
+    :style="{
+      width: `${image.size.width}px`,
+    }"
+  >
     <FileInput
       id="fileInput"
       :icon="['far', 'image']"
       :border="true"
-      :onChange="(e: InputFileEvent) => onFileChanged(e, imageSize, ratio)"
+      :onChange="(e: InputFileEvent) => onFileChanged(e, image, ratio,)"
       accept="image/*"
     />
     <Dropdown
