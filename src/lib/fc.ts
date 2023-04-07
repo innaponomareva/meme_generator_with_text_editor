@@ -7,53 +7,54 @@ export const fontColors: IOption[] = [
     value: "#000000",
   },
   {
+    name: "light-grey",
+    class: "fc-#9d9d9c",
+    value: "#9d9d9c",
+  },
+  {
     name: "white",
-    class: "fc-white",
+    class: "fc-#ffffff",
     value: "#ffffff",
   },
   {
     name: "magenta",
-    class: "fc-magenta",
+    class: "fc-#e6007e",
     value: "#e6007e",
   },
-  {
-    name: "yellow",
-    class: "fc-yellow",
-    value: "#ffed00",
-  },
+
   {
     name: "red",
-    class: "fc-red",
+    class: "fc-#be1622",
     value: "#be1622",
   },
   {
     name: "dark-orange",
-    class: "fc-dark-orange",
+    class: "fc-#e94e1b",
     value: "#e94e1b",
   },
   {
     name: "light-orange",
-    class: "fc-light-orange",
+    class: "fc-#f9b233",
     value: "#f9b233",
   },
   {
+    name: "yellow",
+    class: "fc-#ffed00",
+    value: "#ffed00",
+  },
+  {
     name: "dark-green",
-    class: "fc-dark-green",
+    class: "fc-#3aaa35",
     value: "#3aaa35",
   },
   {
     name: "light-green",
-    class: "fc-light-green",
+    class: "fc-#95c11f",
     value: "#95c11f",
   },
   {
-    name: "blue",
-    class: "fc-blue",
-    value: "#2626b0",
-  },
-  {
     name: "cyan",
-    class: "fc-cyan",
+    class: "fc-#009ee0",
     value: "#009ee0",
   },
 ];

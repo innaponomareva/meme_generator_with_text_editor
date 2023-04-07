@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { CategoryType, IImageSize, IOption } from "../models/models";
+import { IOption } from "../models/models";
 
 interface ColorPaletteProps {
-  imageSize: IImageSize;
   colors: IOption[];
+  // activeColor: string;
+  // onColorPickerChange: (value: string) => void;
   onColorPaletteBtnClick: (option: IOption) => void;
 }
 
@@ -25,14 +26,15 @@ const { colors, onColorPaletteBtnClick } = defineProps<ColorPaletteProps>();
 
 <style>
 .color-palette {
+  width: 100%;
   display: flex;
-
-  justify-content: space-between;
   gap: 0.5rem;
-  overflow: scroll;
+  overflow-x: scroll;
 }
 
 .color-palette div {
+  width: 32px;
+  height: 32px;
   min-width: 32px;
   min-height: 32px;
   cursor: pointer;

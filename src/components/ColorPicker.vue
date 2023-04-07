@@ -30,6 +30,8 @@ input[type="color"] {
   border: none;
   width: 32px;
   height: 32px;
+  min-width: 32px;
+  min-height: 32px;
 }
 input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0.2rem;

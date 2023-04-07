@@ -1,20 +1,19 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, onUnmounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import {
   IOption,
   ISettingMap,
   IIsChanged,
   CategoryType,
-  InputFileEvent,
   ISettingOptionsMap,
 } from "./models/models";
-import FileInput from "./components/FileInput.vue";
 import Button from "./components/Button.vue";
 import ColorPalette from "./components/ColorPalette.vue";
-import ColorPicker from "./components/ColorPicker.vue";
+
 import TextspacesBox from "./components/TextspacesBox.vue";
 import TopBarSettings from "./components/TopBarSettings.vue";
 import Checkbox from "./components/Checkbox.vue";
+import ColorPicker from "./components/ColorPicker.vue";
 import { defaultFontFamily, fontFamilies } from "./lib/ff";
 import { defaultFontSize, fontSizes } from "./lib/fs";
 import { defaultFontWeight, fontWeights } from "./lib/fw";
@@ -23,7 +22,7 @@ import { defaultFontDecoration, fontDecorations } from "./lib/fd";
 import { defaultParagraphAlignment, paragraphAlignments } from "./lib/pa";
 import { defaultFontColor, fontColors } from "./lib/fc";
 import { defaultParagraphLineHeight, paragraphLineHeights } from "./lib/plh";
-import { createCanvas, onCanvasDownload, onFileChanged } from "./utils/canvas";
+import { createCanvas, onCanvasDownload } from "./utils/canvas";
 
 const canvas = ref(null);
 const ratio = ref(2);
@@ -110,52 +109,43 @@ onMounted(() => {
 <template>
   <div class="app-container">
     <TopBarSettings
+      :imageSize="imageSize"
+      :ratio="ratio"
       :settingMap="settingMap"
       :setIsChanged="setIsChanged"
       :setSettingMap="setSettingMap"
     />
 
-    <div class="main-container">
-      <div class="left-bar-settings">
-        <ColorPicker
-          id="color-picker"
-          :activeColor="activeColor"
-          :onColorPickerChange="onColorPickerChange"
-        />
-        <FileInput
-          id="fileInput"
-          :icon="['far', 'image']"
-          :border="true"
-          :onChange="(e: InputFileEvent) => onFileChanged(e, imageSize, ratio)"
-          accept="image/*"
-        />
-      </div>
-
-      <div class="center">
-        <ColorPalette
-          :imageSize="imageSize"
-          :colors="fontColors"
-          :onColorPaletteBtnClick="onColorPaletteBtnClick"
-        />
-        <div
-          class="display"
-          :style="{
-            width: `${imageSize.width}px`,
-            height: `${imageSize.height}px`,
-          }"
-        >
-          <canvas ref="canvas" id="canvas"></canvas>
-          <TextspacesBox
-            :showTextGrid="showTextGrid"
-            :settingMap="settingMap"
-            :settingOptionsMap="settingOptionsMap"
-            :isChanged="isChanged"
-            :setIsChanged="setIsChanged"
-            :setSettingMap="setSettingMap"
-          />
-        </div>
-      </div>
+    <div class="color-settings">
+      <ColorPicker
+        id="color-picker"
+        :activeColor="activeColor"
+        :onColorPickerChange="onColorPickerChange"
+      />
+      <ColorPalette
+        :colors="settingOptionsMap.font.fc"
+        :onColorPaletteBtnClick="onColorPaletteBtnClick"
+      />
     </div>
+
+    <div
+      class="canvas-container"
+      :style="{
+        width: `${imageSize.width}px`,
+        height: `${imageSize.height}px`,
+      }"
+    >
+      <canvas ref="canvas" id="canvas"></canvas>
+      <TextspacesBox
+        :showTextGrid="showTextGrid"
+        :settingMap="settingMap"
+        :settingOptionsMap="settingOptionsMap"
+        :isChanged="isChanged"
+        :setIsChanged="setIsChanged"
+        :setSettingMap="setSettingMap"
+      />
+    </div>
+
     <div class="settings-bottom">
       <Checkbox
         name="grid"
@@ -175,34 +165,23 @@ onMounted(() => {
 <style>
 .app-container {
   width: fit-content;
+  max-width: 620px;
   margin: 0 auto;
-  padding: 50px 0 0;
+  padding: 50px 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
 
-.main-container {
-  min-width: 32rem;
+.color-settings {
   display: flex;
-  _justify-content: space-between;
-  gap: 1.2rem;
+  gap: 0.5rem;
+  overflow-x: scroll;
 }
 
-.left-bar-settings {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.center {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.display {
+.canvas-container {
   position: relative;
+  margin: 0 auto;
 }
 
 canvas {
@@ -213,5 +192,14 @@ canvas {
 .settings-bottom {
   display: flex;
   gap: 1rem;
+}
+
+@media only screen and (max-width: 506px) {
+  .main-container {
+    flex-direction: column;
+  }
+  .left-bar-settings {
+    flex-direction: row;
+  }
 }
 </style>
