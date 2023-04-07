@@ -11,6 +11,7 @@ Application for creating memes.
    - Font type
    - Font weight (normal / bold)
    - Font style (normal / italic)
+   - Text decoration (normal / underline)
    - Line height
    - Text alignment (left / center / right)
 5. Download option (JPG)
