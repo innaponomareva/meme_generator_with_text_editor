@@ -4,6 +4,7 @@ import { writeText } from "./writeText";
 
 export const onCanvasDownload = (ratio: number) => {
   const textData = getTextData();
+  console.log("textData", textData);
   const originalCanvas = document.getElementById("canvas") as HTMLCanvasElement;
   const clonedCanvas = cloneCanvas(originalCanvas) as HTMLCanvasElement;
   document.body.appendChild(clonedCanvas);

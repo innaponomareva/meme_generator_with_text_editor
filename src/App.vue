@@ -6,7 +6,6 @@ import {
   IIsChanged,
   CategoryType,
   ISettingOptionsMap,
-  IImage,
 } from "./models/models";
 import Button from "./components/Button.vue";
 import ColorPalette from "./components/ColorPalette.vue";
@@ -48,6 +47,7 @@ const setImageSize = () => {
 };
 
 const handleResize = () => {
+  console.log("resize");
   setDisplaySize();
   setImageSize();
 

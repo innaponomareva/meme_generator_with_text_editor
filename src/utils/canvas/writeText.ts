@@ -26,11 +26,13 @@ export const writeText = (
           ? canvas.width - allElemsWidth - 9
           : 9;
 
+      console.log("ratio", ratio);
       p.children.forEach((child) => {
         ctx.fillStyle = child.style.fc;
         ctx.font = `${child.style.fst} ${child.style.fw} ${
           parseInt(child.style.fs) * 16 * ratio
         }px ${child.style.ff}`;
+
         ctx.textBaseline = "alphabetic";
         ctx.fillText(child.textContent, x_textspaceOne, y_textspaceOne);
         x_textspaceOne = x_textspaceOne + child.offsetWidth * ratio;

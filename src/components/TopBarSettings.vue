@@ -16,7 +16,7 @@ import {
   ISettingMap,
 } from "../models/models";
 import { paragraphLineHeights } from "../lib/plh";
-import { onFileChanged } from "../utils/canvas";
+import { onFileChange } from "../utils/canvas";
 
 interface TopBarSettingsProps {
   image: IImage;
@@ -107,7 +107,7 @@ const onParagraphLineHeightChange = (option: IOption) => {
       id="fileInput"
       :icon="['far', 'image']"
       :border="true"
-      :onChange="(e: InputFileEvent) => onFileChanged(e, image, ratio,)"
+      :onChange="(e: InputFileEvent) => onFileChange(e, image, ratio,)"
       accept="image/*"
     />
     <Dropdown
