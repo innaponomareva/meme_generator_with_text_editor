@@ -47,7 +47,6 @@ const setImageSize = () => {
 };
 
 const handleResize = () => {
-  console.log("resize");
   setDisplaySize();
   setImageSize();
 

@@ -4,20 +4,31 @@ import { writeText } from "./writeText";
 
 export const onCanvasDownload = (ratio: number) => {
   const textData = getTextData();
-  console.log("textData", textData);
   const originalCanvas = document.getElementById("canvas") as HTMLCanvasElement;
   const clonedCanvas = cloneCanvas(originalCanvas) as HTMLCanvasElement;
   document.body.appendChild(clonedCanvas);
   writeText(textData, clonedCanvas, ratio);
 
   const imageURI = clonedCanvas.toDataURL(`image/jpeg`);
-  const link = document.createElement("a");
-  link.download = "myImage";
-  link.style.visibility = "hidden";
-  document.body.appendChild(link);
-
-  link.href = imageURI;
-  link.click();
-  document.body.removeChild(link);
+  downloadImage(imageURI, "myImage.jpg");
   document.body.removeChild(clonedCanvas);
+};
+
+const downloadImage = (url: string, name: string) => {
+  fetch(url)
+    .then((resp) => resp.blob())
+    .then((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 200);
+    })
+    .catch(() => alert("An error sorry"));
 };
