@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, watchEffect, watch } from "vue";
+import { ref, reactive, onMounted, onUnmounted, watchEffect, watch } from 'vue';
 import {
   IOption,
   ISettingMap,
   IIsChanged,
   CategoryType,
   ISettingOptionsMap,
-} from "./models/models";
-import Button from "./components/Button.vue";
-import ColorPalette from "./components/ColorPalette.vue";
+} from './models/models';
+import Button from './components/Button.vue';
+import ColorPalette from './components/ColorPalette.vue';
 
-import TextspacesBox from "./components/TextspacesBox.vue";
-import TopBarSettings from "./components/TopBarSettings.vue";
-import Checkbox from "./components/Checkbox.vue";
-import ColorPicker from "./components/ColorPicker.vue";
-import { defaultFontFamily, fontFamilies } from "./lib/ff";
-import { defaultFontSize, fontSizes } from "./lib/fs";
-import { defaultFontWeight, fontWeights } from "./lib/fw";
-import { defaultFontStyle, fontStyles } from "./lib/fst";
-import { defaultFontDecoration, fontDecorations } from "./lib/fd";
-import { defaultParagraphAlignment, paragraphAlignments } from "./lib/pa";
-import { defaultFontColor, fontColors } from "./lib/fc";
-import { defaultParagraphLineHeight, paragraphLineHeights } from "./lib/plh";
+import TextspacesBox from './components/TextspacesBox.vue';
+import TopBarSettings from './components/TopBarSettings.vue';
+import Checkbox from './components/Checkbox.vue';
+import ColorPicker from './components/ColorPicker.vue';
+import { defaultFontFamily, fontFamilies } from './lib/ff';
+import { defaultFontSize, fontSizes } from './lib/fs';
+import { defaultFontWeight, fontWeights } from './lib/fw';
+import { defaultFontStyle, fontStyles } from './lib/fst';
+import { defaultFontDecoration, fontDecorations } from './lib/fd';
+import { defaultParagraphAlignment, paragraphAlignments } from './lib/pa';
+import { defaultFontColor, fontColors } from './lib/fc';
+import { defaultParagraphLineHeight, paragraphLineHeights } from './lib/plh';
 import {
   createCanvas,
   onCanvasDownload,
   drawImageOnCanvas,
-} from "./utils/canvas";
+} from './utils/canvas';
 
 const canvas = ref(null);
 const ratio = ref(2);
 const showTextGrid = ref(true);
 const displaySize = reactive({ width: 0, height: 0 });
-const image = reactive({ size: { width: 0, height: 0, coeff: 1 }, src: "" });
-const activeColor = ref("#000000");
+const image = reactive({ size: { width: 0, height: 0, coeff: 1 }, src: '' });
+const activeColor = ref('#000000');
 
 const setDisplaySize = () => {
   displaySize.width = window.innerWidth;
@@ -43,7 +43,7 @@ const setDisplaySize = () => {
 const setImageSize = () => {
   image.size.width = displaySize.width > 500 ? 500 : 384;
   image.size.height =
-    image.src === "" ? image.size.coeff * image.size.width : image.size.height;
+    image.src === '' ? image.size.coeff * image.size.width : image.size.height;
 };
 
 const handleResize = () => {
@@ -56,7 +56,7 @@ const handleResize = () => {
       image.size.height,
       ratio.value
     );
-    image.src !== "" && drawImageOnCanvas(ctx, image);
+    image.src !== '' && drawImageOnCanvas(ctx, image);
   }
 };
 
@@ -118,24 +118,24 @@ const onColorPickerChange = (value: string) => {
     class: `fc-${value}`,
     value: value,
   };
-  setSettingMap(CategoryType.font, "fc", colorOption);
+  setSettingMap(CategoryType.font, 'fc', colorOption);
   settingOptionsMap.font.fc.push(colorOption);
   setIsChanged(CategoryType.font, true);
 };
 
 const onColorPaletteBtnClick = (option: IOption) => {
   setActiveColor(option.value);
-  setSettingMap(CategoryType.font, "fc", option);
+  setSettingMap(CategoryType.font, 'fc', option);
   setIsChanged(CategoryType.font, true);
 };
 
 onMounted(() => {
   handleResize();
-  window.addEventListener("resize", handleResize);
+  window.addEventListener('resize', handleResize);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
+  window.removeEventListener('resize', handleResize);
 });
 </script>
 
@@ -205,7 +205,7 @@ onUnmounted(() => {
   width: fit-content;
   max-width: 620px;
   margin: 0 auto;
-  padding: 50px 0.5rem;
+  padding: 1.5rem 0;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
