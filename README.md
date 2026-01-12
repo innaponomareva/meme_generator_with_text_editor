@@ -1,31 +1,31 @@
-## 1. Task
+# Meme Generator with Text Editor
 
-Application for creating memes.
+A fun **browser-based meme creator** that lets you choose an image and add custom text.
 
-1. Uploading image files as a base
-2. Adding and editing text in the upper part of the image
-3. Adding and editing text in the lower part of the image
-4. Possibility to change:
-   - Font size
-   - Font color (color picker + color palette)
-   - Font type
-   - Font weight (normal / bold)
-   - Font style (normal / italic)
-   - Text decoration (normal / underline)
-   - Line height
-   - Text alignment (left / center / right)
-5. Download option (JPG)
+👉 **Live Demo**: https://innaponomareva.github.io/meme_generator_with_text_editor/
 
-## 2. Stack
+## 🚀 Features
 
-1. Vue3
-2. TypeScript
-3. headlessui
-4. clsx
-5. fortawesome
-6. uuid
-7. yarn
+- Uploading image files as a base
+- Adding and editing text in the **upper** part of the image
+- Adding and editing text in the **lower** part of the image
+- Possibility to change:
+  - Font size
+  - Font color (color picker + color palette)
+  - Font type
+  - Font weight (normal / bold)
+  - Font style (normal / italic)
+  - Text decoration (normal / underline)
+  - Line height
+  - Text alignment (left / center / right)
+- Download option (**JPG**)
 
-## 3. GitHub Pages
+## 🧩 Tech Stack
 
-https://innaponomareva.github.io/meme_generator_with_text_editor/
+- Vue3
+- TypeScript
+- headlessui
+- clsx
+- fortawesome
+- uuid
+- yarn
