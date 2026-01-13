@@ -29,14 +29,17 @@ jobs:
           node-version: 20
           cache: npm
 
-      # Use npm ci if you commit package-lock.json; otherwise use npm install
-      - name: Install dependencies
+      - name: Install
         run: npm install
 
       - name: Build
         run: npm run build
 
+      - name: Verify dist exists
+        run: ls -la dist
+
       - uses: actions/configure-pages@v5
+
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
